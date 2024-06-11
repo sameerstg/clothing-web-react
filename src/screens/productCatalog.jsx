@@ -8,6 +8,7 @@ import shorts from '../WSO-13707_02_IM_01_Jemma_Bermuda_Pleat_Short_Mid_Indigo.j
 import causual from '../weaczzy-summer-casual-dresses-ceb537e9e3494b34ba509f49610cb024.jpg'
 import images from '../images.jpg'
 import { Link, Outlet } from 'react-router-dom';
+// import './productCatalog.css'
 
 
 const Header = () => {

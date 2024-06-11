@@ -8,6 +8,7 @@ import pSweater from '../Assets/DesignTool/sweater.jpg'
 import pJeans from '../Assets/DesignTool/jeans.png'
 import pHoodie from '../Assets/DesignTool/hood.jpg'
 import { FaCartShopping, FaYoutube } from 'react-icons/fa6'
+import { Link } from 'react-router-dom'
 
 // import p1 from '../Assets/DesignTool/1.png'
 // import p1 from '../Assets/DesignTool/1.png'
@@ -16,72 +17,71 @@ import { FaCartShopping, FaYoutube } from 'react-icons/fa6'
 // import p1 from '../Assets/DesignTool/1.png'
 // import p1 from '../Assets/DesignTool/1.png'
 export function DesignTool() {
-    
+
     useEffect(() => {
-        class CartItem{
-            constructor(name, desc, img, price){
+        class CartItem {
+            constructor(name, desc, img, price) {
                 this.name = name
                 this.desc = desc
-                this.img=img
+                this.img = img
                 this.price = price
                 this.quantity = 1
-           }
+            }
         }
-        
-        class LocalCart{
+
+        class LocalCart {
             static key = "cartItems"
-        
-            static getLocalCartItems(){
+
+            static getLocalCartItems() {
                 let cartMap = new Map()
-             const cart = localStorage.getItem(LocalCart.key)   
-             if(cart===null || cart.length===0)  return cartMap
+                const cart = localStorage.getItem(LocalCart.key)
+                if (cart === null || cart.length === 0) return cartMap
                 return new Map(Object.entries(JSON.parse(cart)))
             }
-        
-            static addItemToLocalCart(id, item){
+
+            static addItemToLocalCart(id, item) {
                 let cart = LocalCart.getLocalCartItems()
-                if(cart.has(id)){
+                if (cart.has(id)) {
                     let mapItem = cart.get(id)
-                    mapItem.quantity +=1
+                    mapItem.quantity += 1
                     cart.set(id, mapItem)
                 }
                 else
-                cart.set(id, item)
-               localStorage.setItem(LocalCart.key,  JSON.stringify(Object.fromEntries(cart)))
-               updateCartUI()
-                
+                    cart.set(id, item)
+                localStorage.setItem(LocalCart.key, JSON.stringify(Object.fromEntries(cart)))
+                updateCartUI()
+
             }
-        
-            static removeItemFromCart(id){
-            let cart = LocalCart.getLocalCartItems()
-            if(cart.has(id)){
-                let mapItem = cart.get(id)
-                if(mapItem.quantity>1)
-               {
-                mapItem.quantity -=1
-                cart.set(id, mapItem)
-               }
-               else
-               cart.delete(id)
-            } 
-            if (cart.length===0)
-            localStorage.clear()
-            else
-            localStorage.setItem(LocalCart.key,  JSON.stringify(Object.fromEntries(cart)))
-               updateCartUI()
+
+            static removeItemFromCart(id) {
+                let cart = LocalCart.getLocalCartItems()
+                if (cart.has(id)) {
+                    let mapItem = cart.get(id)
+                    if (mapItem.quantity > 1) {
+                        mapItem.quantity -= 1
+                        cart.set(id, mapItem)
+                    }
+                    else
+                        cart.delete(id)
+                }
+                if (cart.length === 0)
+                    localStorage.clear()
+                else
+                    localStorage.setItem(LocalCart.key, JSON.stringify(Object.fromEntries(cart)))
+                updateCartUI()
             }
         }
-        
-        
+
+
         const cartIcon = document.querySelector('.fa-cart-arrow-down')
         const wholeCartWindow = document.querySelector('.whole-cart-window')
         wholeCartWindow.inWindow = 0
         const addToCartBtns = document.querySelectorAll('.add-to-cart-btn')
-        addToCartBtns.forEach( (btn)=>{
+        addToCartBtns.forEach((btn) => {
             btn.addEventListener('click', addItemFunction)
-        }  )
-        
-        function addItemFunction(e){
+        })
+
+        function addItemFunction(e) {
             const id = e.target.parentElement.parentElement.parentElement.getAttribute("data-id")
             const img = e.target.parentElement.parentElement.previousElementSibling.src
             const name = e.target.parentElement.previousElementSibling.textContent
@@ -90,52 +90,52 @@ export function DesignTool() {
             price = price.replace("Price: $", '')
             const item = new CartItem(name, desc, img, price)
             LocalCart.addItemToLocalCart(id, item)
-         console.log(price)
+            console.log(price)
         }
-        
-        
-        cartIcon.addEventListener('mouseover', ()=>{
-        if(wholeCartWindow.classList.contains('hide'))
-        wholeCartWindow.classList.remove('hide')
+
+
+        cartIcon.addEventListener('mouseover', () => {
+            if (wholeCartWindow.classList.contains('hide'))
+                wholeCartWindow.classList.remove('hide')
         })
-        
-        cartIcon.addEventListener('mouseleave', ()=>{
+
+        cartIcon.addEventListener('mouseleave', () => {
             // if(wholeCartWindow.classList.contains('hide'))
-            setTimeout( () =>{
-                if(wholeCartWindow.inWindow===0){
+            setTimeout(() => {
+                if (wholeCartWindow.inWindow === 0) {
                     wholeCartWindow.classList.add('hide')
                 }
-            } ,500 )
-            
-            })
-        
-         wholeCartWindow.addEventListener('mouseover', ()=>{
-             wholeCartWindow.inWindow=1
-         })  
-         
-         wholeCartWindow.addEventListener('mouseleave', ()=>{
-            wholeCartWindow.inWindow=0
+            }, 500)
+
+        })
+
+        wholeCartWindow.addEventListener('mouseover', () => {
+            wholeCartWindow.inWindow = 1
+        })
+
+        wholeCartWindow.addEventListener('mouseleave', () => {
+            wholeCartWindow.inWindow = 0
             wholeCartWindow.classList.add('hide')
-        })  
-         
-        
-        function updateCartUI(){
+        })
+
+
+        function updateCartUI() {
             const cartWrapper = document.querySelector('.cart-wrapper')
-            cartWrapper.innerHTML=""
+            cartWrapper.innerHTML = ""
             const items = LocalCart.getLocalCartItems()
-            if(items === null) return
+            if (items === null) return
             let count = 0
             let total = 0
-            for(const [key, value] of items.entries()){
+            for (const [key, value] of items.entries()) {
                 const cartItem = document.createElement('div')
                 cartItem.classList.add('cart-item')
-                let price = value.price*value.quantity
-                price = Math.round(price*100)/100
-                count+=1
+                let price = value.price * value.quantity
+                price = Math.round(price * 100) / 100
+                count += 1
                 total += price
-                total = Math.round(total*100)/100
+                total = Math.round(total * 100) / 100
                 cartItem.innerHTML =
-                `
+                    `
                 <img src="${value.img}"> 
                                <div class="details">
                                    <h3>${value.name}</h3>
@@ -146,13 +146,13 @@ export function DesignTool() {
                                </div>
                                <div class="cancel"><i class="fas fa-window-close"></i></div>
                 `
-               cartItem.lastElementChild.addEventListener('click', ()=>{
-                   LocalCart.removeItemFromCart(key)
-               })
+                cartItem.lastElementChild.addEventListener('click', () => {
+                    LocalCart.removeItemFromCart(key)
+                })
                 cartWrapper.append(cartItem)
             }
-        
-            if(count > 0){
+
+            if (count > 0) {
                 cartIcon.classList.add('non-empty')
                 let root = document.querySelector(':root')
                 root.style.setProperty('--after-content', `"${count}"`)
@@ -160,13 +160,66 @@ export function DesignTool() {
                 subtotal.innerHTML = `SubTotal: $${total}`
             }
             else
-            cartIcon.classList.remove('non-empty')
+                cartIcon.classList.remove('non-empty')
         }
-        document.addEventListener('DOMContentLoaded', ()=>{updateCartUI()})
-      }, []); 
-   
-        
-    
+        document.addEventListener('DOMContentLoaded', () => { updateCartUI() })
+
+
+
+        //
+
+
+        function changeShirt(image) {
+            console.log('Changing shirt image to:', image);
+            document.getElementById('shirt-pic').src = "../Assets/DesignTool/ image";
+        }
+
+        function changeTrouser(image) {
+            console.log('Changing trouser image to:', image);
+            document.getElementById('trouser-pic').src = "../Assets/DesignTool/image";
+        }
+
+        function changeDress(image) {
+            console.log('Changing dress image to:', image);
+            document.getElementById('dress-pic').src = "../Assets/DesignTool/image";
+        }
+        // // Ensure the DOM is fully loaded before running the script
+        document.addEventListener('DOMContentLoaded', function () {
+            // Select the button using the class name
+            var checkoutButton = document.querySelector('.checkout');
+
+            // Check if the button exists to avoid errors
+            if (checkoutButton) {
+                // Add a click event listener to the button
+                checkoutButton.addEventListener('click', function () {
+                    // Redirect to the desired page
+                    window.location.href = 'payment.html'; // Replace with your target URL
+                });
+            }
+        });
+
+
+
+
+        document.getElementById('message-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            document.querySelector('.success-message').style.display = 'block';
+        });
+
+
+        // document.getElementById("designtool.html").addEventListener("view cart", function (event) {
+        //     event.preventDefault();
+        //     window.location.href = "payment.html";
+        // });
+
+
+
+
+
+    }, []);
+
+
+
 
     return (
         <div>
@@ -183,8 +236,10 @@ export function DesignTool() {
                         <h2>Shopping Bag</h2>
                         <div class="cart-wrapper"></div>
                         <div class="subtotal">Subtotal: $0.00</div>
-                        <button type="button" class="checkout">Checkout</button>
-                        <div class="view-cart">View Cart</div>
+                        <Link to="/payment">
+                            <button type="button" class="checkout">Checkout</button>
+                            <div class="view-cart">View Cart</div>
+                        </Link>
                     </div>
                 </div>
             </header>

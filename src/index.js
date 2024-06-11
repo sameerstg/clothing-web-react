@@ -1,13 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { DesignTool } from "./screens/designTool";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Register from "./screens/register";
 import Payment from "./screens/payment";
 import ProductCatalog from "./screens/productCatalog";
-
+import "./index.css";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>

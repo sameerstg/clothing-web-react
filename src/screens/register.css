@@ -1,4 +1,11 @@
 /* Style the container */
+
+body {
+  z-index: -10;
+  /* background-image: url("../Assets/DesignTool/bacckground.jpg"); */
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 .container {
     width: 400px; /* increase the width to 500px */
     padding: 16px;
@@ -43,11 +50,7 @@
     margin-top: 16px;
     width: 100%; /* make the submit button take up the full width of the container */
   }
-  body {
-    background-image: url("./bacckground.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
+
   /* Style the submit button hover effect */
   .container button[type="submit"]:hover {
     background-color: #3e8e41;
