@@ -12,7 +12,7 @@ class App extends React.Component {
             {/* <Register/> */}
             {/* <Register/> */}
             {/* <ProductCatalog/> */}
-            <DesignTool/>
+            {/* <DesignTool/> */}
             
            </div>
         );

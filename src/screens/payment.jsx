@@ -1,9 +1,9 @@
 import React from 'react'
 
-function payment() {
+function Payment() {
     return (
        <body>
-    <div class="container">
+    {/* <div class="container"> */}
         <div class="header">
             <h1>Shopping Cart</h1>
         </div>
@@ -16,11 +16,11 @@ function payment() {
                     <form id="order-form">
                         <div class="form-group">
                             <label for="name" class="form-label">Name:</label>
-                            <input type="text" id="name" class="form-input" required>
+                            <div type="text" id="name" class="form-input" required/>
                         </div>
                         <div class="form-group">
                             <label for="email" class="form-label">Email:</label>
-                            <input type="email" id="email" class="form-input" required>
+                            <div type="email" id="email" class="form-input" required/>
                         </div>
                         <div class="form-group">
                             <label for="address" class="form-label">Address:</label>
@@ -30,15 +30,15 @@ function payment() {
                         <div class="payment-method">
                             <h3>Payment Method:</h3>
                             <div class="payment-option">
-                                <input type="radio" id="credit-card" name="payment" value="credit card" required>
+                                <div type="radio" id="credit-card" name="payment" value="credit card" required/>
                                 <label for="credit-card">Credit Card</label>
                             </div>
                             <div class="payment-option">
-                                <input type="radio" id="banktransfer" name="payment" value="banktransfer">
+                                <div type="radio" id="banktransfer" name="payment" value="banktransfer"/>
                                 <label for="banktransfer">Bank Transfer</label>
                             </div>
                             <div class="payment-option">
-                                <input type="radio" id="cash-on-delivery" name="payment" value="cash on delivery">
+                                <div type="radio" id="cash-on-delivery" name="payment" value="cash on delivery"/>
                                 <label for="cash-on-delivery">Cash on Delivery</label>
                             </div>
                         </div>
@@ -61,4 +61,4 @@ function payment() {
     )
 }
 
-export default payment
+export default Payment
